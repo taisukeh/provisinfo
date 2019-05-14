@@ -1,6 +1,7 @@
 require 'plist'
 require 'json'
 require 'date'
+require 'shellwords'
 
 require "openssl"
 require "rexml/document"
@@ -41,7 +42,7 @@ class Provisioning
  
 
   def load_from_file()    
-    xml_raw = `security cms -D -i #{@filename}` 
+    xml_raw = `security cms -D -i #{@filename.shellescape}` 
 	  xml_parsed = Plist::parse_xml(xml_raw)   
     @teamID = xml_parsed['Entitlements']['com.apple.developer.team-identifier']
 	  @name = xml_parsed['Name']
